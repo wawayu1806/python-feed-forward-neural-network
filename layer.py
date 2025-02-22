@@ -12,7 +12,7 @@ class Layer:
     def initialize_weight_matrix(self, m):
         mean = 0
         stddev = np.sqrt(2/(self.n_neurons+m))
-        mat = np.random.normal(loc=mean, scale=stddev, size=(self.n_neurons, m))
+        mat = np.random.normal(loc=mean, scale=stddev, size=(m, self.n_neurons))
         self.weight_matrix = mat 
 
     def set_bias_vector(self):
@@ -31,8 +31,3 @@ class Layer:
 
     def update_weights(self, weights):
         self.weight_matrix = weights
-
-    def forward(self):
-        z = np.dot(self.weight_matrix, self.input_vector) + self.bias_vector
-        activation_output =  Neuron.sigmoid(z)
-        return activation_output

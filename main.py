@@ -1,4 +1,5 @@
 from network import Network
+import numpy as np
 
 def main():
     network = Network()
