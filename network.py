@@ -14,7 +14,7 @@ class Network:
 
         # add the hidden layers
         for i in range(1, len(layers)-1):
-            self.layers.append(HiddenLayer(i))
+            self.layers.append(HiddenLayer(layers[i]))
 
         # add the output layer and update self.n_layers
         outputlayer = OutputLayer(layers[-1])
