@@ -1,19 +1,12 @@
+from neuron import Neuron
 import numpy as np
-from neuron import Neuron 
 
-class Layer:
+class OutputLayer:
     def __init__(self, n_neurons):
         self.n_neurons = n_neurons
         self.neurons = [Neuron(0.0) for _ in range(self.n_neurons)] 
         self.bias_vector = np.zeros(shape=(self.n_neurons,1))
         self.input_vector = None
-        self.weight_matrix = None 
-
-    def initialize_weight_matrix(self, m):
-        mean = 0
-        stddev = np.sqrt(2/(self.n_neurons+m))
-        mat = np.random.normal(loc=mean, scale=stddev, size=(m, self.n_neurons))
-        self.weight_matrix = mat 
 
     def set_bias_vector(self):
         for i, neuron in enumerate(self.neurons):
@@ -29,5 +22,3 @@ class Layer:
         for neuron, bias in zip(self.neurons, biases):
             neuron.set_bias(bias)
 
-    def update_weights(self, weights):
-        self.weight_matrix = weights
