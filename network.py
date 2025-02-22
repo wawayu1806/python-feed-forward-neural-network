@@ -1,3 +1,5 @@
+import numpy as np
+from neuron import Neuron
 from hiddenlayer import HiddenLayer
 from inputlayer import InputLayer
 from outputlayer import OutputLayer
@@ -24,3 +26,29 @@ class Network:
     def connect_layers(self):
         for i in range(self.n_layers-1):
             self.layers[i].initialize_weight_matrix(self.layers[i+1].n_neurons)
+
+    def __forward(self, layer_i, layer_j):
+        x = layer_i.get_input_vector() 
+        W = layer_i.get_weight_matrix()
+        b = layer_j.get_bias_vector()
+
+        z = np.dot(W, x) + b 
+        y = Neuron.sigmoid(z)
+
+        return y
+
+    def feed_forward(self, input_vector):
+        # set the input of the inputlayer
+        self.layers[0].set_input_vector(input_vector)
+
+        # call forward on consecutive layers and set the output vector 
+        for i in range(self.n_layers-1):
+            y_next = self.__forward(self.layers[i], self.layers[i+1])
+         
+            if i+1 == self.n_layers-1:
+                self.layers[i+1].set_output_vector(y_next)
+            else:
+                self.layers[i+1].set_input_vector(y_next)
+
+        return self.layers[-1].get_output_vector()
+            
